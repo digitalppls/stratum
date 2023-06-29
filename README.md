@@ -36,7 +36,7 @@ WARNING: this is a proof-of-concept code in alpha state
 
 Example:
 
-    python3 strelay.py -s anyscryptpool.foo -t 3333 -u 1BaE7aavLF17jj618QKYFc5x6NGxk7uBkC -a x -l 0.0.0.0 -p 3334 -c 127.0.0.1 -x 4444
+    python3 strelay.py -s anyscryptpool.foo -t 3333 -u WORKER_NAME -a x -l 0.0.0.0 -p 3334 -c 127.0.0.1 -x 4444
 
 The relay will listen on port 3334 until some miner connects.
 Then it will open a new connection with the origin pool.
