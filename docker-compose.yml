@@ -1,0 +1,18 @@
+version: "3"
+services:
+  stratum:
+    image: stratum
+    container_name: stratum
+    environment:
+      POOL_ADDRESS: eu.ss.btc.com
+      POOL_PORT: 3333
+      WORKER_NAME: EZIDTest01
+    build:
+      dockerfile: dockerfile
+      context: .
+    restart: always
+    ports:
+      - "3333:3333"
+      - "4444:4444"
+    volumes:
+      - ./code:/stratum

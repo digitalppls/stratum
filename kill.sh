@@ -1,0 +1,1 @@
+docker stop stratum && docker rm stratum && docker image rm stratum

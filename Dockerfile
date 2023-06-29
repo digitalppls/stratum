@@ -1,7 +1,8 @@
-FROM python:3
-WORKDIR /
+FROM python:3.10.8-alpine3.17
+WORKDIR /stratum
 
-COPY ./code ./
-RUN pip install
-COPY . .
-CMD [ "python", "./strelay.py","-s eu.ss.btc.com -t 3333 -u EZIDTest01 -a x -l 0.0.0.0 -p 3333 -c 127.0.0.1 -x 4444" ]
+CMD \
+ echo POOL_ADDRESS: ${POOL_ADDRESS} \
+&& echo POOL_PORT: ${POOL_PORT} \
+&& echo WORKER_NAME: ${WORKER_NAME} \
+&& python strelay.py -s ${POOL_ADDRESS} -t ${POOL_PORT} -u ${WORKER_NAME} -a x -l 0.0.0.0 -p 3333 -c 0.0.0.0 -x 4444
