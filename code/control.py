@@ -147,4 +147,4 @@ class Control(object):
 
             # command.shutdown(0)
             command.close()
-            time.sleep(5.5)
+            time.sleep(0.5)
