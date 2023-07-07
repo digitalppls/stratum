@@ -97,13 +97,13 @@ class Control(object):
         while not self.shutdown:
             response = {}
             command = server_listen.listen()
-            data = command.recv(2048).decode()
             try:
+                data = command.recv(2048).decode()
                 jdata = json.loads(data.replace("'", '"'))
                 query = jdata['query']
                 execute = True
             except:
-                self.log.error("cannot understand control command: %s" % data)
+                self.log.error("cannot understand control command: %s")
                 execute = False
             if execute:
                 self.log.info("executing query %s" % query)
