@@ -16,3 +16,5 @@ services:
       - "4444:4444"
     volumes:
       - ./code:/stratum
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
