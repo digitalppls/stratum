@@ -76,7 +76,7 @@ class Proxy(object):
         self.manager = manager.Manager(sharestats=self.shares, identifier="mng"+self.id)
         self.shutdown = False
 
-    def set_auth(self, user, passw):
+    def set_auth(self, user, passw, callback):
         if self.manager.authorized:
             self.log.info(
                 "sending new authorization to pool %s/%s" % (user, passw))
@@ -87,6 +87,7 @@ class Proxy(object):
                 "setting initial pool authorization to %s/%s" % (user, passw))
         self.manager.username = user
         self.manager.password = passw
+        self.manager.callback = callback
 
     def get_info(self):
         try:

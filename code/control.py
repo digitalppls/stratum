@@ -17,6 +17,7 @@ class Control(object):
         "user": None,
         "pass": "x",
         "backup": "us.clevermining.com",
+        "callback":"127.0.0.1/api",
         "backup_port": "3333"}
 
     def __init__(self, proxydb=None, sharestats=None):
@@ -28,6 +29,7 @@ class Control(object):
         self.listen_ip = "127.0.0.1"
         self.listen_port = 2222
         self.manager = manager.Manager()
+        self.manager.callback=self.poolmap["callback"]
 
     def get_info(self):
         info = {}

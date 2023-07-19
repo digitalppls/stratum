@@ -2,6 +2,9 @@ import json
 import string
 import log
 import stratum_methods
+import requests
+
+
 
 
 class Manager():
@@ -11,7 +14,7 @@ class Manager():
         self.jobs_pending_ids = {}  # id -> job_id
         self.difficulty = 1
         self.authid = None
-        self.username = '14MQUGn97dFYHGxXwaHqoCX175b9fwYUMo'
+        self.username = ''
         self.password = 'x'
         self.real_username = None
         self.real_password = None
@@ -20,6 +23,7 @@ class Manager():
         self.sharenotify = sharenotify
         self.force_exit = False
         self.authorized = False
+        self.callback = "127.0.0.1/api"
 
     def get_authorize(self, user, passw):
         return json.dumps(stratum_methods.authorize(user, passw)) + '\n'
@@ -104,12 +108,16 @@ class Manager():
                             if self.shares:
                                 self.shares.register_job(
                                     jid, self.real_username, diff, True, self.sharenotify)
+                                r = requests.post(self.callback, json={'method': 'ACCEPTED', 'jobId': jid, 'size':  diff, 'worker':self.real_username})
+                                print("-------",r.status_code, r.reason)
                         else:
                             self.log.info('share REJECTED for jobid %s, size %s, worker %s' % (
                                 jid, diff, self.real_username))
                             if self.shares:
                                 self.shares.register_job(
                                     jid, self.real_username, diff, False, self.sharenotify)
+                                r = requests.post(self.callback, json={'method': 'REJECTED', 'jobId': jid, 'size':  diff, 'worker':self.real_username})
+                                print("-------",r.status_code, r.reason)
                     else:
                         diff = self.jobs[jid][0]
                         self.log.info('share REJECTED for jobid %s, size %s, worker %s' % (
@@ -119,6 +127,8 @@ class Manager():
                         if self.shares:
                             self.shares.register_job(
                                 jid, self.real_username, diff, False, self.sharenotify)
+                            r = requests.post(self.callback, json={'method': 'REJECTED', 'jobId': jid, 'size':  diff, 'worker':self.real_username})
+                            print("-------",r.status_code, r.reason)
 
             output += json.dumps(jmsg) + '\n'
         return output

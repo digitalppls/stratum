@@ -91,6 +91,12 @@ def parse_args():
         action="store_true",
         help='Enable quite mode, no stdout output')
     parser.add_argument(
+        '-cb',
+        dest='callback',
+        type=str,
+        default='127.0.0.1/api',
+        help='Callback url to save shares')
+    parser.add_argument(
         '-v',
         dest='verbose',
         type=int,
@@ -125,6 +131,7 @@ controller.poolmap['pool'] = args.pool
 controller.poolmap['port'] = args.port
 controller.poolmap['user'] = args.username
 controller.poolmap['pass'] = args.password
+controller.poolmap['callback'] = args.callback
 t = threading.Thread(target=controller.start, args=[])
 t.daemon = True
 t.start()
@@ -140,7 +147,7 @@ while not shutdown:
         controller.poolmap['pool'], controller.poolmap['port'])
     pool = pool_connection.connect()
     proxy = Proxy.Proxy(pool, sharestats=shares)
-    proxy.set_auth(controller.poolmap['user'], controller.poolmap['pass'])
+    proxy.set_auth(controller.poolmap['user'], controller.poolmap['pass'], controller.poolmap['callback'])
     proxy.add_miner(miner)
     t = threading.Thread(target=proxy.start, args=[])
     t.daemon = True
