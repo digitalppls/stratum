@@ -99,8 +99,8 @@ class Control(object):
         while not self.shutdown:
             response = {}
             command = server_listen.listen()
-            data = command.recv(2048).decode()
             try:
+                data = command.recv(2048).decode()
                 jdata = json.loads(data.replace("'", '"'))
                 query = jdata['query']
                 execute = True
