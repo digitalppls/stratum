@@ -105,7 +105,7 @@ class Control(object):
                 query = jdata['query']
                 execute = True
             except:
-                self.log.error("cannot understand control command: %s" % data)
+                self.log.error("cannot understand control command")
                 execute = False
             if execute:
                 self.log.info("executing query %s" % query)
