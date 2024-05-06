@@ -11,7 +11,7 @@ services:
     build:
       dockerfile: ./Dockerfile
       context: .
-    restart: always
+    restart: unless-stopped
     ports:
       - "3333:3333"
       - "4444:4444"
@@ -19,3 +19,8 @@ services:
       - ./code:/stratum
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
+  restarter:
+    image: docker:cli
+    volumes: ["/var/run/docker.sock:/var/run/docker.sock"]
+    command: ["/bin/sh", "-c", "while true; do sleep 86400; docker restart stratum; done"]
+    restart: unless-stopped
